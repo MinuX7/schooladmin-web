@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --bs-nav-link-font-size: 1.4rem;
+}
+
+.navbar li.nav-item:hover a {
+  text-decoration: underline;
+}
+
+.navbar li.nav-item .nav-link.active {
+    background-color: lightblue;
+}
+
+.navbar.bg-sa-light {
+    background-color: #e3f2fd;
+}
