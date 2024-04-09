@@ -1,0 +1,64 @@
+<div class="card create-teacher-card">
+    <div class="card-header">
+        <h2> Create teacher </h2>
+      </div>
+    <div class="card-body">
+        <form [formGroup]="teacherFormGroup" class="create-teacher-form">
+            <div class="form-group avatar-container profile-picture-form">
+                <div class="image-container" *ngIf="teacherFormGroup.value.profilePictureData; else placeholder" 
+                    [ngClass]="{'box-shadow-avatar': !!teacherFormGroup.value.profilePictureData}"
+                    [ngStyle]="{backgroundImage: 'url(' + teacherFormGroup.value.profilePictureData + ')'}">
+                </div> 
+                <ng-template #placeholder>
+                    <div class="image-container avatar-placeholder"></div>
+                </ng-template>
+
+                <label for="avatar-input-file">
+                    <div class="icon-wrapper">
+                        <input type="file" id="avatar-input-file" accept="image/*" formControlName="uploadFile"  (change)="onProfilePictureChanged($event)" />
+                        <input type="hidden" formControlName="photoFileName" />
+                        <i class="bi bi-pencil-fill" ></i>
+                    </div>
+                </label>
+            </div>
+
+            <div class="form-grup row align-items-center mt-2">
+                <label for="first-name" class="col-3 d-flex justify-content-end">First Name: </label>
+                <div class="col-9">
+                    <input id="first-name" class="form-control" type="text" formControlName="firstName">
+                </div>
+            </div>
+        
+            <div class="form-group row align-items-center mt-2">
+                <label for="last-name" class="col-3 d-flex justify-content-end">Last Name: </label>
+                <div class="col-9">
+                    <input id="last-name" class="form-control" type="text" formControlName="lastName">
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center mt-2">
+                <label for="description" class="col-3 d-flex justify-content-end">Description: </label>
+                <div class="col-9">
+                    <textarea id="description" class="form-control" type="text" formControlName="description"> </textarea>
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center mt-2">
+                <label for="birth-date" class="col-3 d-flex justify-content-end">Birth date: </label>
+                <div class="col-9">
+                    <mat-form-field id="birth-date" class="mat-datepick-form-field">
+                        <input class="mat-date-form-control" matInput [matDatepicker]="picker" (click)="picker.open()" formControlName="birthDate" readonly="true" >
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker ></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <button class="btn btn-secondary" type="button" (click)="resetForm()" > Reset </button>
+                <button class="btn btn-primary ms-2" type="button" (click)="createTeacher()"> Create </button>
+            </div>
+    
+        </form>
+    </div>
+</div>

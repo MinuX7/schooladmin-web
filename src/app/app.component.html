@@ -7,19 +7,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item" >
-          <a class="nav-link" routerLink="/teachers" routerLinkActive="active" href="#">Teachers</a>
+          <a class="nav-link" [routerLink]="['schools', schoolId, 'teachers']" routerLinkActive="active" href="#">Teachers</a>
         </li>
         <li class="nav-item ms-2">
-          <a class="nav-link" routerLink="/classes" routerLinkActive="active" aria-current="page" href="#"> Classes </a>
+          <a class="nav-link"  [routerLink]="['schools', schoolId, 'classes']" routerLinkActive="active" routerLinkActive="active" aria-current="page" href="#"> Classes </a>
         </li>
         <li class="nav-item ms-2">
           <a class="nav-link"   routerLink="/catalog" routerLinkActive="active" href="#">Catalog</a>
         </li>
+        <li class="nav-item d-flex">
+          <form class="d-flex ms-0" role="search">
+            <select class="form-control me-2" type="" placeholder="Search" aria-label="Search">
+             <option> Option 12 </option>
+              <option> Option 12 </option>
+            </select>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </li>
       </ul>
-      <form class="d-flex ms-0 justify-content-start" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      
       
       <li class="list-group-item dropdown mx-2">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,13 +42,8 @@
   </div>
 </nav>
 
-<main class="main">
-  {{ baseUrl }}
-  <div *ngFor="let school of schools" class="d-flex">
-    <div> {{ school.id }} </div>
-    <div> {{ school.shortName }} </div>
-    <div> {{ school.name }} </div>
-  </div>
+<main class="main container pt-5">
+
   <router-outlet />
 </main>
 

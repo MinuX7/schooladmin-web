@@ -1,0 +1,120 @@
+<div class="sch-modal-content">
+    <div class="sch-modal-header">
+        <button type="button" class="btn-dialog-close" aria-label="Close" (click)="close()"> <i class="bi bi-x"></i></button>
+        <div class="stepper-wrapper">
+            <div class="stepper-item" [ngClass]="{completed: step > 1, active: step==1}">
+              <div class="step-counter">1</div>
+              <div class="step-name">Class details</div>
+            </div>
+            <div class="stepper-item" [ngClass]="{completed: step > 2, active: step==2}">
+              <div class="step-counter">2</div>
+              <div class="step-name">Add courses</div>
+            </div>
+            <div class="stepper-item" [ngClass]="{active: step==3}">
+              <div class="step-counter">3</div>
+              <div class="step-name">Review</div>
+            </div>
+          </div>
+    </div>
+    <div class="sch-modal-body">
+        <form class="class-form" [formGroup]="createClassForm">
+            <div id="step-1" *ngIf="step === 1">
+                <div [formGroup]="studentClassForm" class="m-auto" style="width: 15rem">
+                    <div class="row align-items-center" >
+                        <label for="grade" class="col-4 d-flex justify-content-end"> Grade: </label>
+                        <div class="col-8 grade-input-group d-flex flex-column">
+                            <button class="btn btn-secondary btn-grade-up" (click)=decreaseGrade() [disabled]="studentClassForm.controls['grade'].value >= 13">
+                                <i class="bi bi-chevron-up"></i> 
+                            </button>
+                            <input id="grade" type="text" class="form-control" formControlName="grade" readonly="true">  
+                            <button class="btn btn-secondary btn-grade-down" (click)="increaseGrade()" [disabled]="studentClassForm.controls['grade'].value <= 1">
+                                <i class="bi bi-chevron-down"></i> 
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mt-4">
+                        <label for="use-label" class="col-4 d-flex justify-content-end"> Use label </label>
+                        <div class="col-8 form-check form-switch">
+                            <input id="use-label" class="form-check-input" type="checkbox" role="switch" formControlName="useLabel" >
+                        </div>
+                    </div>
+                    <div class="row align-items-center mt-4" *ngIf="studentClassForm.value.useLabel">
+                        <label for="class-label" class="col-4 d-flex justify-content-end"> Label: </label>
+                        <div class="col-8 d-flex">
+                            <button class="btn btn-secondary btn-navigate-left" (click)="moveLabelLeft()" [disabled]="labelIdx <= 0" > 
+                                <i class="bi bi-chevron-left"></i> </button>
+                            <input id="class-label" type="text" class="class-label-input form-control" formControlName="label" readonly="true" >
+                            <button class="btn btn-secondary btn-navigate-right" (click)="moveLabelRight()" [disabled]="labelIdx >= availableLabels.length-1" > <i class="bi bi-chevron-right"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="step-2" *ngIf="step === 2">
+                <div formArrayName="courses">
+                    <div *ngIf="coursesFormArray.length === 0" class="alert alert-danger">
+                        <p> No courses for this class. You can add courses now, or you can manage them later in student class management page. </p>
+                    </div>
+                    <div *ngFor="let course of coursesFormArray.controls; let idx=index" class="d-flex align-items-center mt-1">
+                        <div [formGroupName]="idx" class="d-flex flex-column flex-grow-1 border border-secondary-subtle rounded px-2 py-3">
+                            <div class="form-group required">
+                                <label for="course-name"> Course Name </label>
+                                <input type="text" class="form-control" formControlName="courseName">
+                            </div>
+                            <div class="form-group required mt-2">
+                                <label for="course-name"> Teacher </label>
+                                <mat-select formControlName="teacher" class="form-control" >
+                                    <mat-option>None</mat-option>
+                                    @for (teacher of allTeachers; track teacher.id) { 
+                                    <mat-option [value]="teacher">{{teacher.firstName + ' ' + teacher.lastName}}</mat-option>
+                                    } 
+                                  </mat-select>
+                            </div> 
+                        </div>
+                        <button class="btn btn-outline-danger ms-2" (click)="removeCourse(idx)"> - </button>
+                    </div>
+
+                </div>
+                <div class="text-center my-2">
+                    <button class="btn btn-success" (click)="addNewCourse()"> <i class="bi bi-plus-square"></i> Add course </button>
+                </div>
+            </div>
+            <div id="step-3" *ngIf="step === 3">
+                <div class="text-center">
+                    <span class="lh-1 fs-1 fw-bold text-decoration-underline">{{'Class ' + (studentClassForm.value.grade | classdisplay: studentClassForm.value.label)}}</span>
+                </div>
+                <div class="mt-2">
+                    <span class="fs-4"> Courses </span>
+                    <div *ngFor="let course of coursesFormArray.value" class="card mt-2">
+                        <div class="card-body">
+                            <div><span class="fs-5"> {{course.courseName }}</span> </div>
+                            <div>
+                                <span class="sch-fs-12 text-muted">Thought by: </span><span class="sch-fs-12 fw-bold text-muted"> {{course.teacher.firstName + ' ' + course.teacher.lastName }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="sch-modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" click="close()">
+            Cancel
+        </button>
+        <div>
+            <button type="button" class="btn btn-secondary" (click)="toStep(step -1)" [disabled]="step === 1"> 
+                <i class="bi bi-chevron-compact-left"></i> Previous
+            </button>
+
+            <button *ngIf="step === 1" type="button"  class="btn btn-secondary ms-2" (click)="toStep(step + 1)" [disabled]="studentClassForm.invalid">
+                Next <i class="bi bi-chevron-compact-right"></i>
+            </button>
+            <button *ngIf="step === 2" type="button" class="btn btn-secondary ms-2" (click)="toStep(step + 1)" [disabled]="coursesFormArray.invalid"> 
+                Next <i class="bi bi-chevron-compact-right"></i>
+            </button>
+            <button *ngIf="step === 3" type="button" class="btn btn-primary ms-2" (click)="createClassWithCourses()"> 
+                Create class
+            </button>
+        </div>
+    </div>
+</div>

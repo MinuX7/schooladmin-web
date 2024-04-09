@@ -1,1 +1,44 @@
-<p>classes works!</p>
+<div>
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-primary btn-lg" (click)="openCreateClassModal()">
+            <i class="bi bi-plus-square me-2" > </i><strong>Add class</strong>
+        </button>
+    </div>
+    <div *ngIf="!classes" class="alert alert-danger" role="alert">
+        No classes found! Consider adding one.
+    </div>
+
+    <div *ngIf="selectedClass" class="d-flex">
+        <button class="btn btn-secondary btn-navigate-left" (click)="moveClassLeft()" [disabled]= "selectedClassIndex<=0" > 
+            <i class="bi bi-chevron-left"></i> </button>
+        <div class="text-center align-middle class-display flex-grow-1 border"> 
+            <span> {{ 'Id:' + selectedClass.id }}</span>
+            <span class="fs-3 fw-bold"> {{ selectedClass.grade | classdisplay: selectedClass.label }} </span> 
+        </div>
+        <button class="btn btn-secondary btn-navigate-right" (click)="moveClassRight()" [disabled]= "selectedClassIndex>=classes.length-1" > <i class="bi bi-chevron-right"></i> </button>
+    </div>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-courses-tab" data-bs-toggle="tab" href="#nav-courses" role="tab" aria-controls="nav-courses" aria-selected="true">
+                Courses
+            </a>
+            <a class="nav-link" id="nav-students-tab" data-bs-toggle="tab" href="#nav-students" role="tab" aria-controls="nav-students" aria-selected="false">
+                Student
+            </a>
+    
+        </div>
+    </nav>
+    <div class="tab-content" id="class-nav-content">
+        <div class="tab-pane fade show active" id="nav-courses" role="tabpanel" aria-labelledby="nav-courses-tab">
+            <div *ngIf="selectedClass">
+                 <class-courses [schoolId]="schoolId" [classId]="selectedClass!.id"></class-courses>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-students" role="tabpanel" aria-labelledby="nav-students-tab">
+            <div *ngIf="selectedClass">
+                <class-students [schoolId]="schoolId" [classId]="selectedClass!.id"> </class-students>
+            </div>
+        </div>
+    </div>
+
+</div>

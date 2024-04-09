@@ -1,0 +1,62 @@
+.avatar-container {
+    position: relative;
+    margin:auto;
+    width: fit-content;
+
+    .image-container {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        width: 214px;
+        height: 200px;
+        border-radius: 50%;
+        margin: auto;
+
+        &.avatar-placeholder {
+            background-image: url('/assets/images/default_avatar.jpg');
+        }
+    }
+    
+    .box-shadow-avatar{
+        box-shadow: 0 10px 20px 20px #6c93001a;
+    }
+
+    .icon-wrapper {
+        position: absolute;
+        height: 40px;
+        width: 40px;
+        padding: 0.35rem;
+        background-color: #2962FF;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: 0.8rem;
+        top: 70%;
+        z-index: 2;
+        cursor: pointer;
+
+        &:hover {
+            transition: all .25s;
+            background-color: darken(#2962FF, 15%);
+        }
+    
+        i {
+            color: white;
+        }
+    
+        label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        input[type='file'] {
+            display: none;
+        }
+    }
+}
+
+
+

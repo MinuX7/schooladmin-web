@@ -1,0 +1,30 @@
+<div id="image-cropper" class="d-flex flex-column align-items-center height-100" >
+    <image-cropper
+        [imageBase64]="data.base64Image"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 3"
+        [output]="'base64'"
+        format="png"
+        [roundCropper]="roundCropper"
+        (imageCropped)="imageCropped($event)"
+        [allowMoveImage]="true"
+        [(transform)]="transform"
+        class="height-100"
+        >
+    </image-cropper>
+    <div class="d-flex p-2 border rounded align-self-stretch justify-content-between">
+        <div>
+            <button class="btn btn-secondary btn-sm"> Cancel </button>
+        </div>
+        <div class="d-flex">
+            <button class="btn-crop-action" (click)="zoomIn()"> <i class="bi bi-zoom-in"></i> </button>
+            <button class="btn-crop-action" (click)="zoomOut()"> <i class="bi bi-zoom-out"></i> </button>
+            <button class="btn-crop-action" (click)="rotateLeft()"> <i class="bi bi-arrow-counterclockwise"></i></button>
+            <button class="btn-crop-action" (click)="rotateRight()"> <i class="bi bi-arrow-clockwise"></i></button>
+            <button class="btn-crop-action" (click)="reset()"> <i class="bi bi-arrow-repeat"></i></button>
+        </div>
+        <div class="ms-1">
+            <button class="btn btn-primary btn-sm ms-1" (click)="cropImage()"> <i class="bi bi-crop"> </i> Crop </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="sch-modal-content">
+    <div class="scho-modal-header">
+        Create student
+    </div>
+    <div class="sch-modal-body px-3 pb-4">
+        <form class="class-form" [formGroup]="createStudentForm">
+
+            <div class="form-group avatar-container profile-picture-form">
+                <div class="image-container profile-picture" *ngIf="createStudentForm.value.profilePictureData; else placeholder" 
+                    [ngClass]="{'box-shadow-avatar': !!createStudentForm.value.profilePictureData}"
+                    [ngStyle]="{backgroundImage: 'url(' + createStudentForm.value.profilePictureData + ')'}">
+                </div> 
+                <ng-template #placeholder>
+                    <div class="image-container avatar-placeholder"></div>
+                </ng-template>
+
+                <label for="avatar-input-file">
+                    <div class="icon-wrapper">
+                        <input type="file" id="avatar-input-file" accept="image/*" (change)="onProfilePictureChanged($event)" />
+                        <input type="hidden" formControlName="photoFileName" />
+                        <i class="bi bi-pencil-fill" ></i>
+                    </div>
+                </label>
+            </div>
+            <div class="form-group required">
+                <label for="name"> Name</label>
+                <div class="d-flex">
+                    <input id="name" name="firstName" type="text" class="form-control" formControlName="firstName">
+                    <input id="name" name="lastName" type="text" class="form-control ms-2" formControlName="lastName">
+                </div>
+            </div>
+            <div class="form-group d-flex required mt-2">
+                <div class="flex-grow-1">
+                    <label for="email"> Email </label>
+                    <input id="email" type="email" class="form-control" formControlName="email">
+                </div>
+                <div class="flex-grow-1 ms-2">
+                    <label for="phone"> Phone </label>
+                    <input id="phone" type="text" class="form-control" formControlName="phoneNumber">
+                </div>
+
+            </div>
+            <div class="form-group d-flex required mt-2">
+                <div class="flex-grow-1 ">
+                    <label for="father-name"> Father name: </label>
+                    <input id="father-name" type="email" class="form-control" formControlName="fatherName">
+                </div>
+                <div class="flex-grow-1 ms-2">
+                    <label for="mother-name"> Mother name: </label>
+                    <input id="mother-name" type="text" class="form-control" formControlName="motherName">
+                </div>
+
+            </div>
+            <div class="form-group d-flex mt-2 required">
+                <div style="width: 40%;">
+                    <label for="registration"> Registration Nr.</label>
+                    <input id="registration" class="form-control" formControlName="registrationNumber">
+                </div>
+            </div> 
+            <div class="form-group d-flex mt-2 required">
+                <div style="width: 40%;">
+                    <label for="birth-date"> Birth date</label>
+                    <mat-form-field id="birth-date" class="mat-datepick-form-field">
+                        <input class="mat-date-form-control" matInput [max]="maxDate" [matDatepicker]="picker" (click)="picker.open()" formControlName="birthDate" readonly="true" >
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker ></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div> 
+            <div class="form-group mt-2">
+                <label class="required" for="gender"> Gender: </label>
+
+                <mat-radio-group aria-label="Select an option" color="primary" formControlName="gender">
+                    <mat-radio-button value="MALE">Male</mat-radio-button>
+                    <mat-radio-button value="FEMALE">Female</mat-radio-button>
+                </mat-radio-group>
+            </div> 
+            <div class="form-group mt-2">
+                <label for="hobies"> Hobbies: </label>
+                 <div formGroupName="hobbiesChecked" class="d-flex flex-wrap">
+                    <div *ngFor = "let hobby of availableHobbies" >
+                        <mat-checkbox type="checkbox" color="primary" formControlName="{{hobby}}" > {{hobby}} </mat-checkbox>
+                    </div>
+                </div>
+                <div formArrayName="hobbiesInput" style="width: 30%;">
+                    <div *ngFor="let hobbyInputControl of hobbiesInputFormArray.controls; let i=index" class="d-flex justify-content-center mt-1">
+                        <input type="text" class="form-control" [formControlName]="i">
+                        <button class="btn btn-outline-danger btn-sm align-self-center ms-2 py-0" (click)="removeHobby(i)"> - </button>
+                    </div>
+                    <a href="" class="mt-1" (click)="$event.preventDefault(); addNewInputHobby()">Add new hobby</a>
+                </div>
+            </div> 
+        </form>
+    </div>
+    <div class="sch-modal-footer d-flex justify-content-end">
+        <button class="btn btn-secondary" (click)="close()" > Cancel </button>
+        <button class="btn btn-success ms-2" (click)="createStudent()" > Create course </button>
+    </div>
+</div>
+

@@ -1,1 +1,28 @@
-<p>teachers works!</p>
+<div>
+      <div class="d-flex justify-content-end">
+            <button class="btn btn-outline-primary btn-lg text-right" routerLink="create" >
+                  <i class="bi bi-plus-square me-2"> </i><strong>Add teacher</strong>
+            </button>
+      </div>
+      <div class="row">
+            <div *ngFor="let teacher of teachers" class="col-12 col-md-4 mt-4">
+                  <div class="card d-flex flex-column">
+                        <div class="teacher-card-img-container d-flex flex-row justify-content-center py-3">
+                              <div class="profile-picture-img">
+                                    <img *ngIf ="teacher.profilePictureData; else defaultpicture" [src]="teacher.profilePictureData" class="card-img-top" alt="">
+                                    <ng-template #defaultpicture>
+                                          <img src="/assets/images/default_avatar.jpg"  class="card-img-top" alt="" >
+                                    </ng-template>
+                              </div>
+                        </div>
+                        <div class="card-body">
+                              <h2 class="card-title"> {{teacher.firstName + ' ' + teacher.lastName }}</h2>
+                              <p class="card-text"> {{teacher.description}}</p>
+                              <span class="card-text"> {{teacher.birthDate | date: 'MMMM dd, yyy' }} </span>
+                        </div>
+                  </div>
+            </div>
+      </div>
+
+</div>
+

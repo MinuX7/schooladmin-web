@@ -1,0 +1,24 @@
+<div class="px-2 py-4">
+    <div class="text-end mb-3">
+        <button class="btn btn-outline-primary" (click)="openAddCourseDialog()"> <i class="bi bi-plus-square"></i> Add course </button>
+    </div>
+    <div *ngIf="!courses || courses.length == 0" class="alert alert-danger">
+        <span> No courses for this class. Consider adding your first course. </span>
+    </div>
+    <div *ngFor="let course of courses" class="card mt-2">
+        <div class="card-body">
+            <div>
+                <h2 class="mb-0"> {{ course.courseName }} </h2>
+            </div>
+            <div>
+                <p *ngIf="course.description; else noDescription"> {{course.description }}</p>
+                <ng-template #noDescription>
+                    <p> No description provided. </p>
+                </ng-template>
+            </div>
+            <div>
+                <span class="text-muted"> {{ 'Teacher: ' + course.teacher.firstName + ' ' + course.teacher.lastName}} </span>
+            </div>
+        </div>
+    </div>
+</div>

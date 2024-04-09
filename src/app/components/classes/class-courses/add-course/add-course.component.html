@@ -1,0 +1,33 @@
+<div class="sch-modal-content">
+    <div class="sch-modal-header">
+        <button type="button" class="btn-dialog-close" aria-label="Close" (click)="close()"> <i class="bi bi-x"></i></button>
+        <h2>Create course</h2>
+    </div>
+    <div class="sch-modal-body">
+        <form class="class-form" [formGroup]="createCourseForm">
+            <div class="form-group required">
+                <label for="course-name"> Course Name </label>
+                <input type="text" class="form-control" formControlName="courseName">
+            </div>
+            <div class="form-group required mt-2">
+                <label for="course-name"> Teacher </label>
+                <mat-select formControlName="teacher" class="form-control" >
+                    <mat-option>None</mat-option>
+                    @for (teacher of allTeachers; track teacher.id) { 
+                    <mat-option [value]="teacher">{{teacher.firstName + ' ' + teacher.lastName}}</mat-option>
+                    } 
+                </mat-select>
+            </div>
+            <div class="form-group mt-2">
+                <label for="description"> Description </label>
+                <textarea id="description" class="form-control"  rows="3" formControlName="description"></textarea>
+            </div> 
+        </form>
+    </div>
+    <div class="sch-modal-footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary" (click)="close()" > Cancel </button>
+            <button class="btn btn-success ms-2" (click)="createCourse()" [disabled]="createCourseForm.invalid"> Create course </button>
+        </div>
+    </div>
+</div>

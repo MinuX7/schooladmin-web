@@ -1,0 +1,49 @@
+<div>
+    <div class="text-end mb-3">
+        <button class="btn btn-outline-primary" (click)="openAddStudentModal()"> <i class="bi bi-plus-square"></i> Add student </button>
+    </div>
+    <div *ngIf="!students || students.length == 0" class="alert alert-danger">
+        <span> No courses for this class. Consider adding your first course. </span>
+    </div>
+    <div class="row">
+        <div *ngFor="let student of students" class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-header" >
+                    <div class="profile-picture-img">
+                        <img *ngIf ="student.profilePictureUrl; else defaultpicture" [src]="student.profilePictureUrl" 
+                                    class="card-img-top" alt="">
+                            <ng-template #defaultpicture>
+                                    <img src="/assets/images/default_avatar.jpg"  class="card-img-top" alt="" >
+                            </ng-template>
+                    </div>
+                </div>
+                <div class="card-body" style="position:relative">
+                    <button class="accordion-btn collapsed student-details-btn" data-bs-toggle="collapse" [attr.data-bs-target]="'#student-details-' + student.id" > 
+                        <i class="bi bi-chevron-up fs-5"></i>
+                    </button>
+                    <div>
+                        <span class="fs-5"><b>{{student.firstName + ' ' + student.lastName}} </b></span>
+                    </div>
+                    <div>
+                        <span class="text-muted"><i class="bi bi-telephone"></i> {{student.phoneNumber}}</span>
+                    </div>
+                    <div>
+                        <span class="text-muted"><i class="bi bi-envelope"></i> {{student.email}}</span>
+                    </div>
+                    <div [attr.id]="'student-details-' + student.id" class="collapse">
+                        <hr>
+                        <div>
+                            <span>Registration nr: {{student.registrationNumber}}</span>
+                        </div>
+                        <div>
+                            <span>Birth date: {{student.birthDate | date}}</span>
+                        </div>
+                    </div>
+
+                </div>
+             </div>
+           
+        </div>
+    </div>
+</div>
+
