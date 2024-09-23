@@ -4,6 +4,16 @@
   --bs-nav-link-font-size: 1.4rem;
 }
 
+body {
+  background-color: lightblue !important;
+}
+
+main {
+  background-color: white;
+  min-height: 100vh;
+  // overflow-y: scroll;
+}
+
 .navbar li.nav-item:hover a {
   text-decoration: underline;
 }

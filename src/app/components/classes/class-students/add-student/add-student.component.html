@@ -1,6 +1,7 @@
 <div class="sch-modal-content">
-    <div class="scho-modal-header">
-        Create student
+    <div class="sch-modal-header">
+        <button type="button" class="btn-dialog-close" aria-label="Close" (click)="close()"> <i class="bi bi-x"></i></button>
+        <h2>Create student</h2>
     </div>
     <div class="sch-modal-body px-3 pb-4">
         <form class="class-form" [formGroup]="createStudentForm">
@@ -25,36 +26,67 @@
             <div class="form-group required">
                 <label for="name"> Name</label>
                 <div class="d-flex">
-                    <input id="name" name="firstName" type="text" class="form-control" formControlName="firstName">
-                    <input id="name" name="lastName" type="text" class="form-control ms-2" formControlName="lastName">
+                    <div class="flex-grow-1">
+                        <input id="name" name="firstName" type="text" class="form-control" formControlName="firstName">
+                        <div *ngIf="createStudentForm.get('firstName')?.touched" >
+                            <div *ngIf="createStudentForm.get('firstName')?.hasError('required')"> 
+                                <span class="text-danger">Field is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <input id="name" name="lastName" type="text" class="form-control ms-2" formControlName="lastName">
+                        <div *ngIf="createStudentForm.get('lastName')?.touched" class="ms-2">
+                            <div *ngIf="createStudentForm.get('lastName')?.hasError('required')"> 
+                                <span class="text-danger">Field is required</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group d-flex required mt-2">
                 <div class="flex-grow-1">
                     <label for="email"> Email </label>
-                    <input id="email" type="email" class="form-control" formControlName="email">
+                    <div>
+                        <input id="email" type="email" class="form-control" formControlName="email">
+                        <div *ngIf="createStudentForm.get('email')?.touched" >
+                            <div *ngIf="createStudentForm.get('email')?.hasError('required')"> 
+                                <span class="text-danger">Field is required</span>
+                            </div>
+                            <div *ngIf="createStudentForm.get('email')?.hasError('email')"> 
+                                <span class="text-danger">Invalid email format </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex-grow-1 ms-2">
                     <label for="phone"> Phone </label>
-                    <input id="phone" type="text" class="form-control" formControlName="phoneNumber">
+                    <div>
+                        <input id="phone" type="text" class="form-control" formControlName="phoneNumber">
+                        <div *ngIf="createStudentForm.get('phoneNumber')?.touched" >
+                            <div *ngIf="createStudentForm.get('phoneNumber')?.hasError('required')"> 
+                                <span class="text-danger">Field is required</span>
+                            </div>
+                            <div *ngIf="createStudentForm.get('phoneNumber')?.hasError('pattern')"> 
+                                <span class="text-danger"> Phone number should contain only digits, and can start wiht + </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-            </div>
-            <div class="form-group d-flex required mt-2">
-                <div class="flex-grow-1 ">
-                    <label for="father-name"> Father name: </label>
-                    <input id="father-name" type="email" class="form-control" formControlName="fatherName">
-                </div>
-                <div class="flex-grow-1 ms-2">
-                    <label for="mother-name"> Mother name: </label>
-                    <input id="mother-name" type="text" class="form-control" formControlName="motherName">
-                </div>
-
             </div>
             <div class="form-group d-flex mt-2 required">
                 <div style="width: 40%;">
                     <label for="registration"> Registration Nr.</label>
                     <input id="registration" class="form-control" formControlName="registrationNumber">
+                    <div *ngIf="createStudentForm.get('registrationNumber')?.touched" >
+                        <div *ngIf="createStudentForm.get('registrationNumber')?.hasError('required')"> 
+                            <span class="text-danger">Field is required</span>
+                        </div>
+                        <div *ngIf="createStudentForm.get('registrationNumber')?.hasError('pattern')"> 
+                            <span class="text-danger"> Registration number format should be 2-4 letters followed by -, followed by at least one or multiple 
+                                digit. Ex: CNT-1234 </span>
+                        </div>
+                    </div>
                 </div>
             </div> 
             <div class="form-group d-flex mt-2 required">
@@ -65,8 +97,25 @@
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker ></mat-datepicker>
                     </mat-form-field>
+                    <div *ngIf="createStudentForm.get('birthDate')?.touched" >
+                        <div *ngIf="createStudentForm.get('birthDate')?.hasError('required')"> 
+                            <span class="text-danger">Field is required</span>
+                        </div>
+                    </div>
                 </div>
             </div> 
+            <div class="form-group d-flex mt-2">
+                <div style="width: 40%;">
+                    <label for="father-name"> Father name: </label>
+                    <input id="father-name" type="email" class="form-control" formControlName="fatherName">
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <div style="width: 40%;">
+                    <label for="mother-name"> Mother name: </label>
+                    <input id="mother-name" type="text" class="form-control" formControlName="motherName">
+                </div>
+            </div>
             <div class="form-group mt-2">
                 <label class="required" for="gender"> Gender: </label>
 
@@ -74,6 +123,11 @@
                     <mat-radio-button value="MALE">Male</mat-radio-button>
                     <mat-radio-button value="FEMALE">Female</mat-radio-button>
                 </mat-radio-group>
+                <div *ngIf="createStudentForm.get('gender')?.touched" >
+                    <div *ngIf="createStudentForm.get('gender')?.hasError('required')"> 
+                        <span class="text-danger">Field is required</span>
+                    </div>
+                </div>
             </div> 
             <div class="form-group mt-2">
                 <label for="hobies"> Hobbies: </label>
@@ -94,7 +148,7 @@
     </div>
     <div class="sch-modal-footer d-flex justify-content-end">
         <button class="btn btn-secondary" (click)="close()" > Cancel </button>
-        <button class="btn btn-success ms-2" (click)="createStudent()" > Create course </button>
+        <button class="btn btn-success ms-2" [disabled]="createStudentForm.invalid" (click)="createStudent()" > Create student </button>
     </div>
 </div>
 

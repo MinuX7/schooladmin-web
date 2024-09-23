@@ -40,6 +40,7 @@
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
+              "src/assets/css/button-navigators.css",
               "src/assets/css/school-modal.css",
               "src/assets/css/stepper.css",
               "src/assets/css/profile-picture.css",

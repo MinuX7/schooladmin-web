@@ -8,22 +8,43 @@
         No classes found! Consider adding one.
     </div>
 
-    <div *ngIf="selectedClass" class="d-flex">
-        <button class="btn btn-secondary btn-navigate-left" (click)="moveClassLeft()" [disabled]= "selectedClassIndex<=0" > 
-            <i class="bi bi-chevron-left"></i> </button>
-        <div class="text-center align-middle class-display flex-grow-1 border"> 
-            <span> {{ 'Id:' + selectedClass.id }}</span>
-            <span class="fs-3 fw-bold"> {{ selectedClass.grade | classdisplay: selectedClass.label }} </span> 
+    <div class="d-flex justify-content-center class-selector-wrapper">
+        <div *ngIf="selectedClass" class="d-flex class-selector">
+            <button class="btn btn-secondary btn-navigate-left" (click)="moveClassLeft()" [disabled]= "selectedClassIndex<=0" > 
+                <i class="bi bi-chevron-left"></i> </button>
+            <div class="border flex flex-grow-1">
+                <div class="d-flex flex-column justify-content-center align-items-center class-display" > 
+                    <span class="badge bg-warning text-dark class-status"> {{selectedClass.status}}</span>
+                    <span class="fs-3 fw-bold"> Class {{ selectedClass.grade | classdisplay: selectedClass.label }} </span>
+                </div>
+                <div class="d-flex justify-content-center mt-1">
+                    <div class="stepper-wrapper stepper-status">
+                        <div class="stepper-item">
+                            <div class="step-counter">New</div>
+                        </div>
+                        <div class="stepper-item" >
+                            <div class="step-counter"> Open </div>
+                        </div>
+                        <div class="stepper-item">
+                            <div class="step-counter">Configured</div>
+                        </div>
+                        <div class="stepper-item">
+                            <div class="step-counter">Closed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-secondary btn-navigate-right" (click)="moveClassRight()" [disabled]= "selectedClassIndex>=classes.length-1" > <i class="bi bi-chevron-right"></i> </button>
         </div>
-        <button class="btn btn-secondary btn-navigate-right" (click)="moveClassRight()" [disabled]= "selectedClassIndex>=classes.length-1" > <i class="bi bi-chevron-right"></i> </button>
     </div>
-    <nav>
+ 
+    <nav class="mt-2">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-link active" id="nav-courses-tab" data-bs-toggle="tab" href="#nav-courses" role="tab" aria-controls="nav-courses" aria-selected="true">
                 Courses
             </a>
             <a class="nav-link" id="nav-students-tab" data-bs-toggle="tab" href="#nav-students" role="tab" aria-controls="nav-students" aria-selected="false">
-                Student
+                Students
             </a>
     
         </div>

@@ -27,24 +27,17 @@ export class ClassStudentsComponent implements OnInit, OnChanges {
       if (this.classIdToStudentsMap.has(this.classId)) {
         this.students = this.classIdToStudentsMap.get(this.classId) as Array<any>;
       } else {
-        this.loadClassCourses(this.classId);
+        this.loadClassStudents(this.classId);
       }
 
     }
   }
 
   ngOnInit(): void {
-    this.schoolAdminService.getClassStudents(this.classId, this.classId).subscribe({
-      next: (data) => {
-        this.students = data;
-      }, 
-      error: (err) => {
-        console.error(err);
-      }
-    })
+    this.loadClassStudents(this.classId);
   }
 
-  private loadClassCourses(classId: number) {
+  private loadClassStudents(classId: number) {
     this.schoolAdminService.getClassStudents(this.schoolId, classId).subscribe({
       next: (data) => {
         data.map((student:Student) => {
@@ -69,6 +62,22 @@ export class ClassStudentsComponent implements OnInit, OnChanges {
       data: {
         schoolId: this.schoolId,
         classId: this.classId
+      }
+    });
+    addStudentDialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        let newStudent: Student = data;
+        if (newStudent.photoFileName) {
+          newStudent.profilePictureUrl = encodeURI(environment.baseUrl + "public/profile-picture/" + newStudent.photoFileName); 
+        }
+        if (this.classIdToStudentsMap.get(this.classId)) {
+          this.classIdToStudentsMap.get(this.classId)?.push(newStudent);
+        } else {
+          let tempStudents = new Array<Student>();
+          tempStudents.push(newStudent);
+        }
+        
+        this.students = this.classIdToStudentsMap.get(this.classId) as Student[];
       }
     })
   }

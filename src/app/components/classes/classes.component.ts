@@ -7,6 +7,7 @@ import { AddClassComponent } from './add-class/add-class.component';
 import { Course } from '../../model/course.model';
 import { forkJoin } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { UtilService } from '../../services/util.service';
 
 @Component({
   selector: 'app-classes',
@@ -24,7 +25,7 @@ export class ClassesComponent implements OnInit {
   selectedClassStudents: Array<any>;
 
   
-  constructor(private schoolAdminService: SchoolAdminService, private route: ActivatedRoute, private matDialog: MatDialog )  {
+  constructor(private schoolAdminService: SchoolAdminService, private utilService: UtilService, private route: ActivatedRoute, private matDialog: MatDialog )  {
 
   }
 
@@ -37,7 +38,10 @@ export class ClassesComponent implements OnInit {
         this.selectedClassIndex =0;
         this.changeClassData();
       },
-      error: (err) => alert ('Error loading teachers')
+      error: (err) => {
+        console.error(err);
+        this.utilService.showErrorMessage(err.error, 'Error loading list of classes.')
+      }
     })
   }
 
@@ -56,7 +60,7 @@ export class ClassesComponent implements OnInit {
         this.classes.push(data);
       },
       error: (err) => {
-
+        console.error(err);
       }
     });
   }

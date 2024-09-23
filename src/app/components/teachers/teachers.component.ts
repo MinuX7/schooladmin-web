@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { SchoolAdminService } from '../../services/schooladmin.service';
 import { ActivatedRoute } from '@angular/router';
 import { Teacher } from '../../model/teacher.model';
+import { UtilService } from '../../services/util.service';
 
 @Component({
   selector: 'app-teachers',
@@ -15,7 +16,7 @@ export class TeachersComponent implements OnInit {
   schoolId: number;
   teachers: Array<Teacher> = new Array();
 
-  constructor(private schoolAdminService: SchoolAdminService,private route: ActivatedRoute) {}
+  constructor(private schoolAdminService: SchoolAdminService, private utilService: UtilService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.schoolId = Number(this.route.snapshot.paramMap.get('id'));
@@ -27,7 +28,7 @@ export class TeachersComponent implements OnInit {
           if (teacher.photoFileName)  teacher.profilePictureData = encodeURI(environment.baseUrl + "public/profile-picture/" + teacher.photoFileName); 
           });
       },
-      error: (err) => alert ('Error loading teachers')
+      error: (err) => this.utilService.showErrorMessage(err.error, 'Error loading teachers.')
     })
   }
   

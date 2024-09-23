@@ -47,7 +47,7 @@
                 <label for="birth-date" class="col-3 d-flex justify-content-end">Birth date: </label>
                 <div class="col-9">
                     <mat-form-field id="birth-date" class="mat-datepick-form-field">
-                        <input class="mat-date-form-control" matInput [matDatepicker]="picker" (click)="picker.open()" formControlName="birthDate" readonly="true" >
+                        <input class="mat-date-form-control" matInput [max]="maxDate" [matDatepicker]="picker" (click)="picker.open()" formControlName="birthDate" readonly="true" >
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker ></mat-datepicker>
                     </mat-form-field>

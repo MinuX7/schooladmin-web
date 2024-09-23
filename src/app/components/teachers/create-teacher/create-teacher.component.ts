@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ImageCropperComponent } from '../../image-cropper/image-cropper.component';
 import { SchoolAdminService } from '../../../services/schooladmin.service';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-create-teacher',
@@ -15,9 +16,10 @@ export class CreateTeacherComponent implements OnInit{
   
   schoolId: number;
   teacherFormGroup: FormGroup;
+  maxDate: Date = new Date();
 
  
-  constructor(private schoolAdminService: SchoolAdminService,private route: ActivatedRoute, private dialog: MatDialog) {}
+  constructor(private schoolAdminService: SchoolAdminService, private utilService: UtilService, private route: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.schoolId = Number(this.route.snapshot.paramMap.get('id'));
@@ -83,10 +85,11 @@ export class CreateTeacherComponent implements OnInit{
 
     this.schoolAdminService.createTeacher(this.schoolId, this.teacherFormGroup.value).subscribe({
       next: (data) =>  {
-        this.teacherFormGroup.reset()
+        this.utilService.showSuccessMessage('Successfully created teacher.');
+        this.teacherFormGroup.reset();
       },
       error: (err) => {
-         alert('Error creating teacher')
+         this.utilService.showErrorMessage(err.error, 'Error creating teaching.');
       }
     });
   }

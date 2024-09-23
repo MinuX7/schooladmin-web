@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Teacher } from '../../../model/teacher.model';
 import { SchoolAdminService } from '../../../services/schooladmin.service';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-add-class',
@@ -18,7 +19,8 @@ export class AddClassComponent implements OnInit {
 
   createClassForm: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AddClassComponent>, private schoolAdminService: SchoolAdminService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AddClassComponent>,
+   private schoolAdminService: SchoolAdminService, private utilService: UtilService) {
     this.createClassForm =  new FormGroup({
       studentClass: new FormGroup({
         grade: new FormControl(1, Validators.required),
@@ -106,10 +108,12 @@ export class AddClassComponent implements OnInit {
     });
     this.schoolAdminService.createClassWithCourses(this.data.schoolId, createCourseFormValue).subscribe({
       next: (data) => {
-        console.log('Successfully added class with courses', data);
+        this.utilService.showSuccessMessage(`Successfully added class ${data.grade} (${data.label})`);
         this.dialogRef.close(data);
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        this.utilService.showErrorMessage(err.error, 'Error adding class!');
+      }
     })
   }
 

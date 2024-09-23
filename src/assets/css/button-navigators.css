@@ -1,0 +1,9 @@
+.btn.btn-navigate-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn.btn-navigate-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

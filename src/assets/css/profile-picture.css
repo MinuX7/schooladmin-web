@@ -1,17 +1,17 @@
 .avatar-container {
     position: relative;
     margin:auto;
-    width: fit-content;
+    height: 200px;
+    width: 200px;
 
     .image-container {
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
-        width: 214px;
-        height: 200px;
         border-radius: 50%;
         margin: auto;
-
+        width: 100%;
+        height: 100%;
         &.avatar-placeholder {
             background-image: url('/assets/images/default_avatar.jpg');
         }

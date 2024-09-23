@@ -1,16 +1,17 @@
-<div>
-    <div class="text-end mb-3">
+<div class="px-2 py-4">
+    <div class="d-flex justify-content-between mb-3">
+        <p> <b> Total students: {{students.length}}</b></p>
         <button class="btn btn-outline-primary" (click)="openAddStudentModal()"> <i class="bi bi-plus-square"></i> Add student </button>
     </div>
     <div *ngIf="!students || students.length == 0" class="alert alert-danger">
-        <span> No courses for this class. Consider adding your first course. </span>
+        <span> No student for this class. Consider adding your first student. </span>
     </div>
     <div class="row">
-        <div *ngFor="let student of students" class="col-12 col-md-4">
+        <div *ngFor="let student of students" class="col-12 col-md-4 mt-3">
             <div class="card">
-                <div class="card-header" >
+                <div class="card-header d-flex justify-content-center" >
                     <div class="profile-picture-img">
-                        <img *ngIf ="student.profilePictureUrl; else defaultpicture" [src]="student.profilePictureUrl" 
+                        <img *ngIf="student.profilePictureUrl; else defaultpicture" [src]="student.profilePictureUrl" 
                                     class="card-img-top" alt="">
                             <ng-template #defaultpicture>
                                     <img src="/assets/images/default_avatar.jpg"  class="card-img-top" alt="" >
@@ -37,6 +38,12 @@
                         </div>
                         <div>
                             <span>Birth date: {{student.birthDate | date}}</span>
+                        </div>
+                        <div>
+                            <span>Father name: {{student.fatherName }}</span>
+                        </div>
+                        <div>
+                            <span>Mother name: {{student.motherName }}</span>
                         </div>
                     </div>
 

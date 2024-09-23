@@ -1,5 +1,6 @@
 <div class="px-2 py-4">
-    <div class="text-end mb-3">
+    <div class="d-flex justify-content-between mb-3">
+        <p> <b>Total courses: {{courses.length}} </b> </p>
         <button class="btn btn-outline-primary" (click)="openAddCourseDialog()"> <i class="bi bi-plus-square"></i> Add course </button>
     </div>
     <div *ngIf="!courses || courses.length == 0" class="alert alert-danger">

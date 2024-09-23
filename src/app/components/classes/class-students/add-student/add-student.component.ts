@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SchoolAdminService } from '../../../../services/schooladmin.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageCropper1Component } from '../../../image-cropper1/image-cropper1.component';
+import { UtilService } from '../../../../services/util.service';
 
 
 @Component({
@@ -21,19 +22,19 @@ export class AddStudentComponent {
   createStudentForm:FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AddStudentComponent>,
-    private schoolAdminService: SchoolAdminService, private matDialog: MatDialog, private domSanitizer: DomSanitizer) {
+    private schoolAdminService: SchoolAdminService, private utilService: UtilService, private matDialog: MatDialog) {
     this.createStudentForm =  new FormGroup({
         profilePictureData: new FormControl(),
         photoFileName: new FormControl(),
         firstName: new FormControl(null, Validators.required),
         lastName: new FormControl(null, Validators.required),
         email: new FormControl(null, [Validators.required, Validators.email]),
-        phoneNumber: new FormControl(null, [Validators.required ]),
-        registrationNumber: new FormControl(null, [Validators.required]),
-        birthDate: new FormControl(),
+        phoneNumber: new FormControl(null, [Validators.required, Validators.pattern('^[\\+]?[0-9]+$') ]),
+        registrationNumber: new FormControl(null, [Validators.required, Validators.pattern('^[A-Za-z]{2,4}\\-[0-9]+')]),
+        birthDate: new FormControl(null, [Validators.required]),
         gender: new FormControl(null, [Validators.required]),
-        fatherName: new FormControl(null, [Validators.required ]),
-        motherName: new FormControl(null, Validators.required),
+        fatherName: new FormControl(),
+        motherName: new FormControl(),
         hobbiesChecked: new FormGroup({}),
         hobbiesInput: new FormArray([
 
@@ -68,14 +69,6 @@ export class AddStudentComponent {
           })
           croperDialogRef.afterClosed().subscribe({
             next: (data) => {
-              console.log(data);
-              // let reader1: FileReader = new FileReader();
-              // reader1.onloadend = () => {
-              //   let imageData = reader.result as string;
-              //   this.croppedStudentPhoto = imageData;
-              // console.log(this.croppedStudentPhoto);
-              // };
-              // reader1.readAsDataURL(data.blob);
               if (data) {
                 this.createStudentForm.get('profilePictureData')?.setValue(data); 
               }
@@ -120,14 +113,23 @@ export class AddStudentComponent {
           hobbies.push(hobbyInput);
         }
     });
-    console.log(hobbies);
     formValueCopy.hobbies = hobbies;
+
+    let selectedDate: Date = this.createStudentForm.controls['birthDate'].value;
+    let utcSelectedDate = new Date(Date.UTC(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), 
+          selectedDate.getHours(), selectedDate.getMinutes(), selectedDate.getSeconds()));
+    formValueCopy.birthDate = utcSelectedDate;
+
     delete formValueCopy['hobbiesChecked'];
     delete formValueCopy['hobbiesInput'];
-    console.log(formValueCopy)
     this.schoolAdminService.createStudent(this.data.schoolId, this.data.classId, formValueCopy).subscribe({
-      next:(data) => console.log(data),
-      error: (err) => console.error(err)
+      next:(data) => {
+        this.dialogRef.close(data);
+        this.utilService.showSuccessMessage(`Successfully added student ${data.firstName} ${data.lastName}.`);
+      },
+      error: (err) => {
+        this.utilService.showErrorMessage(err.error, 'An unexpected error occured while creating student.');
+      }
     })
   }
 }

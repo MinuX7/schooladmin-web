@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SchoolAdminService } from '../../../../services/schooladmin.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Teacher } from '../../../../model/teacher.model';
+import { UtilService } from '../../../../services/util.service';
 
 @Component({
   selector: 'app-add-course',
@@ -15,7 +16,7 @@ export class AddCourseComponent implements OnInit {
   labelIdx: any;
   allTeachers: Array<Teacher>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<AddCourseComponent>, private schoolAdminService: SchoolAdminService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,  private utilService: UtilService, private dialogRef: MatDialogRef<AddCourseComponent>, private schoolAdminService: SchoolAdminService) {
     this.createCourseForm =  new FormGroup({
         courseName: new FormControl(null, Validators.required),
         teacher: new FormControl(null, Validators.required),
@@ -37,10 +38,11 @@ export class AddCourseComponent implements OnInit {
   createCourse() {
     this.schoolAdminService.createClassCourse(this.data.schoolId, this.data.classId, this.createCourseForm.value).subscribe({
       next: (data)=> {
+        this.utilService.showSuccessMessage('Successfully added course.');
         this.dialogRef.close(data);
       },
       error: (err)=> {
-        alert("Error craeting course")
+        this.utilService.showErrorMessage(err.error, 'Error adding course.');
       }
     });
   }
