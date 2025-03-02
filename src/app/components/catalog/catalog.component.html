@@ -1,1 +1,33 @@
-<p>catalog works!</p>
+<div style="height: 100%;" >
+ <div class="catalogues d-flex flex-column">
+    <div class="navigations d-flex justify-content-between">
+        <button class="btn btn-secondary btn-navigate-left">
+            <span class="h2"><b><i class="bi bi-chevron-left"></i>  X-A </b></span> 
+        </button>
+        <button class="btn btn-secondary btn-navigate-right">
+            <span class="h2"><b>X-C </b> </span><i class="bi bi-chevron-right"></i> 
+        </button>
+    </div>
+    <div class="catalog px-5" style="position: relative;">
+        <div class="catalog-header d-text mt-4">
+            <span class="golden-text h2"> Colegiul national Ecaterina Teodoroiu </span>
+        </div>
+        <div class="catalog-details" style="position:relative">
+            <div class="catalog-details-text" style="border: 1px solid green" >
+                    <div>
+                        <span class="golden-text h1"> CATALOGUE </span>
+                    </div>
+                    <div> 
+                         <span class="golden-text h2"> Class {{curentClass.grade| classdisplay: curentClass.label  }}</span>
+                    </div>
+                    <div> 
+                        <span class="golden-text h2"> 2023/2024</span>
+                    </div>
+            </div>
+        </div>
+        <div class="actions d-flex justify-content-center">
+            <button class="btn btn-lg btn-secondary"> Open</button>
+        </div>
+    </div>
+ </div>
+</div>

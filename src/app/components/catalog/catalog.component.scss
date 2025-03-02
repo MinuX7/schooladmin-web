@@ -1,0 +1,106 @@
+
+.catalogues {
+    height: 90vh;
+    width: 80%;
+    margin: auto;
+    .catalog {
+        border: 1px solid green;
+        background-color: brown;
+        
+    }   
+}
+
+.navigations {
+  min-height: 4rem;
+  button {
+    width: 8rem;
+  }  
+}
+
+.catalog {
+    height: 80vh;
+    width: 100%;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background: linear-gradient(to right, rgb(60, 13, 20) 3px, rgba(255, 255, 255, 0.5) 5px, rgba(255, 255, 255, 0.25) 7px, rgba(255, 255, 255, 0.25) 10px, transparent 12px, transparent 16px, rgba(255, 255, 255, 0.25) 17px, transparent 22px);
+    box-shadow: 0 0 5px -1px black, inset -1px 1px 2px rgba(255, 255, 255, 0.5);
+    margin: auto;
+}
+
+@media only screen and (min-width:576px) and (max-width: 768px) {
+    .catalog {
+        height: 500px;
+        // width: 300px;
+}
+}
+
+@media only screen and (min-width:768px) and (max-width: 991px) {
+    .catalog {
+        height: 600px;
+        // width: 300px;
+}
+}
+
+@media only screen and (min-width:992px) and (max-width: 1199px) {
+    .catalog {
+        height: 800px;
+        // width: 350px;
+}
+}
+
+@media only screen and (min-width:1200px) and (max-width: 1399px) {
+    .catalog {
+        height: 1000px;
+        // width: 400px;
+}
+}
+
+@media only screen and (min-width:1400px) {
+    .catalog {
+        height: 65rem;
+        // width: 500px;
+    }
+}
+
+
+.class-description {
+    background-color: white;
+    border-style: double;
+}
+
+.golden-text {
+    color: #efbf04;
+}
+
+.catalog-header {
+    height: 10%;
+    text-align: center;
+}
+
+.catalog-details {
+    position: relative;
+    height: 70%;
+}
+
+.catalog-details-text {
+    position:absolute;
+    top: 30%;
+    left: 15%;
+    width: 70%;
+    height: 35%;
+    border-radius: 3px;
+    padding: 15px;
+}
+
+.catalog-details-text > div {
+    text-align: center;
+    padding: 0.5rem 0.8rem;
+}
+
+
+
+
+
+
